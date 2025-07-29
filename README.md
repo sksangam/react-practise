@@ -17,8 +17,3 @@ cd <project-folder>
 npm install
 npm run dev
 ```
-
-## Notes
-
-- All `node_modules` are ignored for clean Git history.
-- Projects are coded individually by referencing final outputs from the Udemy course.
