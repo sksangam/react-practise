@@ -1,4 +1,4 @@
-import type { UserInputProps } from "../calculator";
+import type { UserInputProps } from "@/types/investment";
 import FormField from "./form-field";
 import type { FC } from "react";
 

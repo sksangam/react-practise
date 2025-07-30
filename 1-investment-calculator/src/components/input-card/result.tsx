@@ -6,49 +6,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { calculationResult, type AnnualData } from "@/lib/calculation";
+import type { AnnualData } from "@/types/investment";
 import type { FC } from "react";
-import type { UserInputProps } from "../calculator";
 
-const Result: FC<{ userInput: UserInputProps }> = ({ userInput }) => {
-  const {
-    initialInvestment,
-    annualInvestment,
-    expectedReturn,
-    durationInYears,
-  } = userInput;
-
-  const results: AnnualData[] = calculationResult({
-    initialInvestment,
-    annualInvestment,
-    expectedReturn,
-    durationInYears,
-  });
-
+const Result: FC<{ results: AnnualData[]; inputValid: boolean }> = ({
+  results,
+  inputValid,
+}) => {
   return (
     <div className="border w-full">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Year</TableHead>
-            <TableHead>Investment Value</TableHead>
-            <TableHead>Interest (Year)</TableHead>
-            <TableHead>Total Interest</TableHead>
-            <TableHead>Invested Capital</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {results.map((result) => (
-            <TableRow key={result.year}>
-              <TableCell>{result.year}</TableCell>
-              <TableCell>{result.presentValue}</TableCell>
-              <TableCell>{result.interest}</TableCell>
-              <TableCell>{result.totalInterest}</TableCell>
-              <TableCell>{result.investedCapital}</TableCell>
+      {inputValid ? (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Year</TableHead>
+              <TableHead>Investment Value</TableHead>
+              <TableHead>Interest (Year)</TableHead>
+              <TableHead>Total Interest</TableHead>
+              <TableHead>Invested Capital</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {results.map((result) => (
+              <TableRow key={result.year}>
+                <TableCell>{result.year}</TableCell>
+                <TableCell>{result.presentValue}</TableCell>
+                <TableCell>{result.interest}</TableCell>
+                <TableCell>{result.totalInterest}</TableCell>
+                <TableCell>{result.investedCapital}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className="text-red-500 mt-2">
+          Please check your input. All fields must be positive numbers (annual
+          investment can be zero).
+        </div>
+      )}
     </div>
   );
 };

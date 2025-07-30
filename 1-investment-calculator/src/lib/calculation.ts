@@ -1,13 +1,5 @@
-import type { UserInputProps } from "@/components/calculator";
+import type { AnnualData, UserInputProps } from "@/types/investment";
 import { rupeeFormatter } from "./formatter";
-
-export type AnnualData = {
-  year: number;
-  presentValue: string;
-  interest: string;
-  totalInterest: string;
-  investedCapital: string;
-};
 
 export const calculationResult = ({
   initialInvestment,
@@ -16,13 +8,14 @@ export const calculationResult = ({
   durationInYears,
 }: UserInputProps): AnnualData[] => {
   const annualData: AnnualData[] = [];
+  const returnRate = expectedReturn / 100;
 
   let presentValue = initialInvestment;
   let totalInterest = 0;
   let investedCapital = initialInvestment;
 
   for (let i = 1; i <= durationInYears; i++) {
-    const interest = (presentValue * expectedReturn) / 100;
+    const interest = presentValue * returnRate;
     totalInterest += interest;
     investedCapital += annualInvestment;
     presentValue += annualInvestment + interest;
